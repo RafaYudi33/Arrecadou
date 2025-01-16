@@ -109,7 +109,7 @@ spring.jpa.hibernate.ddl-auto=update
 >   - Doações podem ser **em dinheiro** ou **em itens**.
 >   - Para doações de itens:
 >     - Nome do item
->     - Quantidade (kg/unidades)
+>     - Quantidade (kg)
 >     - Nome do doador
 >     - Telefone
 >     - Opção para **doação anônima**.
