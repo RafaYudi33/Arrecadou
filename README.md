@@ -38,7 +38,7 @@ Garanta que você tem instalado:
 Clone o repositório:
 
 ```bash
-git clone https://github.com/seu_usuario/Arrecadou.git
+git clone https://github.com/RafaYudi33/Arrecadou.git
 cd Arrecadou
 ```
 
