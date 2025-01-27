@@ -10,137 +10,137 @@
 
 <br> 
 <p align="center">
- <a href="#started">Como Começar</a> • 
- <a href="#features">Funcionalidades</a> •
- <a href="#libraries">Bibliotecas Externas</a>
+ <a href="#started">Getting Started</a> • 
+ <a href="#features">Features</a> •
+ <a href="#libraries">External Libraries</a>
 </p>
 
 <br>
 
 <p align="center">
-  <b>Um sistema desktop para gerenciamento de ações de arrecadação por entidades e grupos.</b>
+  <b>A desktop system for managing fundraising actions by entities and groups.</b>
 </p>
 
 ---
 
-<h2 id="started">🚀 Como Começar</h2>
+<h2 id="started">🚀 Getting Started</h2>
 
-### Pré-requisitos
+### Prerequisites
 
-Garanta que você tem instalado:
+Make sure you have installed:
 
-- Java 17 ou superior
-- Maven para gerenciamento de dependências
-- MySQL para o banco de dados
+- Java 17 or later
+- Maven for dependency management
+- MySQL for the database
 
-### Clonando o Projeto
+### Cloning the Project
 
-Clone o repositório:
+Clone the repository:
 
 ```bash
 git clone https://github.com/RafaYudi33/Arrecadou.git
 cd Arrecadou
 ```
 
-### Configuração do Banco de Dados
+### Database Configuration
 
-Antes de rodar o aplicativo, configure o banco de dados no arquivo **`application.properties`**:
+Before running the application, configure the database in the **`application.properties`** file:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/arrecadou
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
+spring.datasource.username=your_username
+spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-### Executando a Aplicação
+### Running the Application
 
-1. Compile o projeto com Maven:
+1. Compile the project with Maven:
    ```bash
    mvn clean install
    ```
 
-2. Execute a aplicação:
+2. Run the application:
    ```bash
    java -jar target/Arrecadou.jar
    ```
 
 ---
 
-<h2 id="features">📍 Funcionalidades</h2>
+<h2 id="features">📍 Features</h2>
 
-> ### 🔹 **1. Cadastro de Entidades**
-> - Ao iniciar o sistema pela primeira vez, solicita **dados da entidade/grupo** que realizará as arrecadações.
+> ### 🔹 **1. Entity Registration**
+> - When starting the system for the first time, it requests **entity/group data** that will conduct fundraising.
 
 ---
 
-> ### 🧑‍💼 **2. Cadastro de Coordenadores**
-> - Permite cadastrar **coordenadores** responsáveis pelas ações, informando:
->   - Nome
+> ### 🧑‍💼 **2. Coordinator Registration**
+> - Allows registering **coordinators** responsible for actions, providing:
+>   - Name
 >   - CPF
->   - Telefone
+>   - Phone number
 
 ---
 
-> ### 🎭 **3. Tipos de Ações**
-> - **Ação de Produção de Evento:**
->   - Eventos para arrecadação de dinheiro, como **festas beneficentes**.
->   - Cadastro de **insumos esperados**.
->   - Definição de **colaboradores** (cozinheiros, atendentes, etc.).
->   - Informações cadastradas:
->     - Nome do evento
->     - Objetivo
->     - Descrição
->     - Data de início e fim
-> - **Ação de Contribuição Direta:**
->   - Ligações para **solicitação de doações financeiras**.
+> ### 🎭 **3. Types of Actions**
+> - **Event Production Action:**
+>   - Events for fundraising, such as **charity events**.
+>   - Registration of **expected supplies**.
+>   - Definition of **collaborators** (cooks, attendants, etc.).
+>   - Registered information:
+>     - Event name
+>     - Objective
+>     - Description
+>     - Start and end date
+> - **Direct Contribution Action:**
+>   - Calls for **soliciting financial donations**.
 
 ---
 
-> ### 💸 **4. Cadastro de Doações**
-> - **Para Contribuições Diretas:**
->   - Seleciona a ação para a qual a doação será destinada.
->   - Dados do doador:
->     - Nome
->     - Telefone
->     - Valor da doação
->     - Opção para **doação anônima**.
-> - **Para Produção de Evento:**
->   - Doações podem ser **em dinheiro** ou **em itens**.
->   - Para doações de itens:
->     - Nome do item
->     - Quantidade (kg)
->     - Nome do doador
->     - Telefone
->     - Opção para **doação anônima**.
+> ### 💸 **4. Donation Registration**
+> - **For Direct Contributions:**
+>   - Selects the action for which the donation is intended.
+>   - Donor information:
+>     - Name
+>     - Phone number
+>     - Donation amount
+>     - Option for **anonymous donation**.
+> - **For Event Production:**
+>   - Donations can be **in money** or **in items**.
+>   - For item donations:
+>     - Item name
+>     - Quantity (kg)
+>     - Donor name
+>     - Phone number
+>     - Option for **anonymous donation**.
 
 ---
 
-> ### 📊 **5. Relatórios de Arrecadação**
-> - Geração de **relatórios finais para ações de contribuição direta**, contendo:
->   - Nome da ação, descrição, datas de início e fim, objetivo.
->   - Coordenadores e seus contatos.
->   - Nome dos doadores (se não anônimo).
->   - Valor total arrecadado.
->   - Lista das doações e seus valores.
-> - Relatórios para **eventos beneficentes** incluem:
->   - Nome da ação, descrição, datas de início e fim, objetivo.
->   - Coordenadores e seus contatos.
->   - Nome dos doadores (se não anônimo).
->   - Valor total em vendas.
->   - Lucro real (com as doações em dinheiro e de item).
->   - Lista de colaboradores cadastrados.
->   - Insumos necessários.
->   - Lucro caso não houvesse nenhuma doação (nem de dinheiro, nem de item).
->   - Lista detalhada das doações recebidas (dinheiro e itens).
+> ### 📊 **5. Fundraising Reports**
+> - Generation of **final reports for direct contribution actions**, containing:
+>   - Action name, description, start and end dates, objective.
+>   - Coordinators and their contacts.
+>   - Donor names (if not anonymous).
+>   - Total amount raised.
+>   - List of donations and their values.
+> - Reports for **charity events** include:
+>   - Action name, description, start and end dates, objective.
+>   - Coordinators and their contacts.
+>   - Donor names (if not anonymous).
+>   - Total sales value.
+>   - Net profit (including monetary and item donations).
+>   - List of registered collaborators.
+>   - Required supplies.
+>   - Profit if no donations (neither money nor items) were made.
+>   - Detailed list of received donations (money and items).
 
 ---
 
-<h2 id="libraries">🔌 Bibliotecas Externas</h2>
+<h2 id="libraries">🔌 External Libraries</h2>
 
-Para aprimorar as funcionalidades e desempenho do sistema, as seguintes bibliotecas externas foram integradas:
+To enhance the system's functionality and performance, the following external libraries have been integrated:
 
-- **Apache PDFBox**: Utilizada para a geração de relatórios em PDF.
+- **Apache PDFBox**: Used for generating PDF reports.
 ---
 
-📌 *Projeto desenvolvido para facilitar a arrecadação de fundos por entidades e grupos organizados.* 🚀
+📌 *Project developed to facilitate fundraising management by entities and organized groups.* 🚀
