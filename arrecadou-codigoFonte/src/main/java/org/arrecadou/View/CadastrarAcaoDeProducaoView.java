@@ -1,5 +1,6 @@
 package org.arrecadou.View;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.arrecadou.Controladores.ControllerAcaoProducao;
 import org.arrecadou.Controladores.ControllerCoordenador;
 import org.arrecadou.Model.Colaborador;
@@ -8,9 +9,12 @@ import org.arrecadou.Model.ItemEsperado;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +24,17 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
     private JTable itensTable, colaboradoresTable;
     private DefaultTableModel itensTableModel, colaboradoresTableModel;
     private JButton addItemButton, removeItemButton, salvarButton, addColaboradorButton, removeColaboradorButton;
-    private JTextField quantidadeField, valorField, nomeField, nomeAcaoField, dataFimField, dataInicioField, descricaoField, objetivoField;
+    private JTextField quantidadeField, valorField, nomeField, nomeAcaoField, descricaoField, objetivoField;
+    private JFormattedTextField dataFimField, dataInicioField;
     JTextField nomeColaboradorField, emailColaboradorField, telefoneColaboradorField;
     JList<Coordenador> coordenadoresList;
     private final ControllerAcaoProducao controllerAcaoProducao;
+    private static final FlatSVGIcon iconAdd = new FlatSVGIcon("icons/addIcon.svg", 16, 16);
+    private static final FlatSVGIcon iconRemove = new FlatSVGIcon("icons/removeIcon.svg", 16, 16);
 
-    public CadastrarAcaoDeProducaoView(ControllerCoordenador controllerCoordenador, ControllerAcaoProducao controllerAcaoProducao) {
+    public CadastrarAcaoDeProducaoView(ControllerCoordenador controllerCoordenador, ControllerAcaoProducao controllerAcaoProducao) throws ParseException {
         setTitle("Cadastro de Ação de Produção");
-        setSize(800, 600);
+        setSize(850, 600);
         setLocationRelativeTo(null);
         setResizable(false);
         this.controllerAcaoProducao = controllerAcaoProducao;
@@ -35,26 +42,79 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
         initializeUI(controllerCoordenador.listarTodosCoordenadores());
     }
 
-    private void initializeUI(List<Coordenador> coordenadoresDisponiveis) {
+    private void initializeUI(List<Coordenador> coordenadoresDisponiveis) throws ParseException {
         setLayout(new BorderLayout(10, 10));
 
-        JPanel topPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+        JPanel topPanel = new JPanel(new GridBagLayout());
         nomeAcaoField = new JTextField();
         descricaoField = new JTextField();
         objetivoField = new JTextField();
-        dataInicioField = new JTextField("YYYY-MM-DD");
-        dataFimField = new JTextField("YYYY-MM-DD");
 
-        topPanel.add(new JLabel("Nome:"));
-        topPanel.add(nomeAcaoField);
-        topPanel.add(new JLabel("Descrição:"));
-        topPanel.add(descricaoField);
-        topPanel.add(new JLabel("Objetivo da Ação:"));
-        topPanel.add(objetivoField);
-        topPanel.add(new JLabel("Data Início:"));
-        topPanel.add(dataInicioField);
-        topPanel.add(new JLabel("Data Fim:"));
-        topPanel.add(dataFimField);
+        MaskFormatter dateMask = new MaskFormatter("##/##/####");
+        dateMask.setPlaceholderCharacter('_');
+
+        dataInicioField = new JFormattedTextField(dateMask);
+        dataFimField = new JFormattedTextField(dateMask);
+
+        descricaoField.setPreferredSize(new Dimension(460, 30));
+        dataFimField.setPreferredSize(new Dimension(460, 30));
+        dataInicioField.setPreferredSize(new Dimension(200, 30));
+        nomeAcaoField.setPreferredSize(new Dimension(200, 30));
+        objetivoField.setPreferredSize(new Dimension(727, 30));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(2, 2, 6, 2);
+        double labelWeight = 0.2;
+        double fieldWeight = 0.8;
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = labelWeight;
+        gbc.anchor = GridBagConstraints.WEST;
+        topPanel.add(new JLabel("Nome:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = fieldWeight;
+        topPanel.add(nomeAcaoField, gbc);
+
+        gbc.gridx = 2;
+        gbc.weightx = labelWeight;
+        topPanel.add(new JLabel("Descrição:"), gbc);
+
+        gbc.gridx = 3;
+        gbc.weightx = fieldWeight;
+        topPanel.add(descricaoField, gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = labelWeight;
+        gbc.anchor = GridBagConstraints.WEST;
+        topPanel.add(new JLabel("Data Início:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.weightx = fieldWeight;
+        topPanel.add(dataInicioField, gbc);
+
+        gbc.gridx = 2;
+        gbc.weightx = labelWeight;
+        topPanel.add(new JLabel("Data Fim:"), gbc);
+
+        gbc.gridx = 3;
+        gbc.weightx = fieldWeight;
+        topPanel.add(dataFimField, gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = labelWeight;
+        gbc.anchor = GridBagConstraints.WEST;
+        topPanel.add(new JLabel("Objetivo da Ação:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridwidth = 3; // 🔹 Ocupa o espaço restante
+        gbc.weightx = fieldWeight;
+        topPanel.add(objetivoField, gbc);
 
         add(topPanel, BorderLayout.NORTH);
 
@@ -71,10 +131,8 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
 
         add(centerPanel, BorderLayout.WEST);
 
-        // Painel principal para as tabelas
         JPanel tablesPanel = new JPanel(new GridLayout(2, 1, 10, 10));
 
-        // Configurar a tabela de itens esperados
         JPanel itensPanel = new JPanel(new BorderLayout(10, 10));
         itensPanel.add(new JLabel("Itens Esperados:"), BorderLayout.NORTH);
         itensTableModel = new DefaultTableModel(new Object[]{"Nome", "Quantidade (kg)", "Valor do kg"}, 0);
@@ -85,6 +143,7 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
         JPanel itensButtonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         addItemButton = new JButton("Adicionar Item");
         removeItemButton = new JButton("Remover Item");
+
         itensButtonsPanel.add(addItemButton);
         itensButtonsPanel.add(removeItemButton);
         itensPanel.add(itensButtonsPanel, BorderLayout.SOUTH);
@@ -101,6 +160,7 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
         JPanel colaboradoresButtonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         addColaboradorButton = new JButton("Adicionar Colaborador");
         removeColaboradorButton = new JButton("Remover Colaborador");
+
         colaboradoresButtonsPanel.add(addColaboradorButton);
         colaboradoresButtonsPanel.add(removeColaboradorButton);
         colaboradoresPanel.add(colaboradoresButtonsPanel, BorderLayout.SOUTH);
@@ -108,8 +168,17 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
         tablesPanel.add(colaboradoresPanel);
         add(tablesPanel, BorderLayout.CENTER);
 
-        salvarButton = new JButton("Salvar Ação");
-        add(salvarButton, BorderLayout.SOUTH);
+        salvarButton = new JButton("Salvar");
+
+        JPanel bottomPanel = new JPanel(new GridBagLayout());
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.SOUTH;
+        gbc.insets = new Insets(20, 0, 20, 0);
+        bottomPanel.add(salvarButton, gbc);
+
+        add(bottomPanel, BorderLayout.SOUTH);
 
         configureItemButtons();
         configureColaboradorButtons();
@@ -117,6 +186,12 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
     }
 
     private void configureColaboradorButtons() {
+
+        addColaboradorButton.setPreferredSize(new Dimension(180, 28));
+        removeColaboradorButton.setPreferredSize(new Dimension(180, 28));
+        addColaboradorButton.setIcon(iconAdd);
+        removeColaboradorButton.setIcon(iconRemove);
+
         addColaboradorButton.addActionListener(e -> {
             nomeColaboradorField = new JTextField();
             emailColaboradorField = new JTextField();
@@ -163,6 +238,14 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
     }
 
     private void configureItemButtons() {
+
+        iconAdd.setColorFilter(null);
+        iconRemove.setColorFilter(null);
+        addItemButton.setIcon(iconAdd);
+        removeItemButton.setIcon(iconRemove);
+        addItemButton.setPreferredSize(new Dimension(180, 28));
+        removeItemButton.setPreferredSize(new Dimension(180, 28));
+
         addItemButton.addActionListener(e -> {
 
              nomeField = new JTextField();
@@ -210,15 +293,25 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
     }
 
     public void configSalvarBtn(){
+
+        UIutils.styleButton(salvarButton);
         salvarButton.addActionListener(e -> {
             try {
-                // Coletar os dados dos campos
+
                 String nome = nomeAcaoField.getText();
                 String descricao = descricaoField.getText();
                 String objetivo = objetivoField.getText();
 
-                LocalDate dataInicio = LocalDate.parse(dataInicioField.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
-                LocalDate dataFim = LocalDate.parse(dataFimField.getText(), DateTimeFormatter.ISO_LOCAL_DATE);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dataInicio;
+                LocalDate dataFim;
+
+                try {
+                    dataInicio = LocalDate.parse(dataInicioField.getText(),formatter);
+                    dataFim = LocalDate.parse(dataFimField.getText(), formatter);
+                } catch (DateTimeParseException ex) {
+                    throw new RuntimeException("Data inválida!");
+                }
 
                 List<Coordenador> coordenadoresSelecionados = coordenadoresList.getSelectedValuesList();
 
@@ -262,7 +355,6 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
                 JOptionPane.showMessageDialog(this, "Ação de Produção cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Erro ao salvar ação: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
 

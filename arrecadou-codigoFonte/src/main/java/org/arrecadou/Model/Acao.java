@@ -124,9 +124,6 @@ public abstract class Acao {
 
     @Override
     public String toString() {
-        return "Acao{" +
-                ", nome='" + nome + '\'' +
-                //", coordenadores='" + coordenadores + '\'' +
-                '}';
+        return nome;
     }
 }

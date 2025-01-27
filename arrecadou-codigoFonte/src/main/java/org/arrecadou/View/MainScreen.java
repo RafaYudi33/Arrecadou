@@ -1,5 +1,8 @@
 package org.arrecadou.View;
 
+
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.arrecadou.Config.AppConfig;
 import org.arrecadou.Config.JpaConfig;
 import org.arrecadou.Controladores.*;
@@ -7,6 +10,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.text.ParseException;
 import java.util.Objects;
 
 @SuppressWarnings("ExtractMethodRecommender")
@@ -33,7 +39,6 @@ public class MainScreen extends JFrame {
     }
 
     private void initializeUI() {
-        setTitle("Arrecadou");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -68,12 +73,21 @@ public class MainScreen extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuCoordenador = new JMenu("Coordenador");
+        FlatSVGIcon iconCoordenador = new FlatSVGIcon("icons/coordenador.svg", 24, 24);
+        iconCoordenador.setColorFilter(null);
+        menuCoordenador.setIcon(iconCoordenador);
+
+
         JMenuItem itemCadastrarCoordenador = new JMenuItem("Cadastrar Coordenador");
         itemCadastrarCoordenador.addActionListener(actionEvent -> openCadastroCoordenadorView());
         menuCoordenador.add(itemCadastrarCoordenador);
         menuBar.add(menuCoordenador);
 
-        JMenu menuAcaoEventoComida = new JMenu("Ação Produção Evento de Comida");
+        JMenu menuAcaoEventoComida = new JMenu("Ação Produção Evento Beneficente");
+        FlatSVGIcon iconEvtBeneficente = new FlatSVGIcon("icons/evtbeneficente.svg", 24, 24);
+        iconEvtBeneficente.setColorFilter(null);
+        menuAcaoEventoComida.setIcon(iconEvtBeneficente);
+
         JMenuItem itemCadastrarAcaoEvento = new JMenuItem("Cadastrar Ação");
         JMenuItem itemCadastrarDoacaoItem = new JMenuItem("Cadastrar Doação de Item");
         JMenuItem itemCadastrarDoacaoDinheiro = new JMenuItem("Cadastrar Doação em dinheiro");
@@ -87,6 +101,11 @@ public class MainScreen extends JFrame {
         itemCadastrarDoacaoDinheiro.addActionListener(actionEvent -> openCadastrarDoacaoDinheiroParaAcaoDeProducao());
 
         JMenu menuAcaoContribuicaoDireta = new JMenu("Ação Contribuição Direta");
+        FlatSVGIcon iconContribDireta = new FlatSVGIcon("icons/evtContDireta.svg", 24, 24);
+        iconContribDireta.setColorFilter(null);
+        menuAcaoContribuicaoDireta.setIcon(iconContribDireta);
+
+
         JMenuItem itemCadastrarAcaoContribuicao = new JMenuItem("Cadastrar Ação");
         itemCadastrarAcaoContribuicao.addActionListener(actionEvent -> openCadastroAcaoContribuicaoDiretaView());
         menuAcaoContribuicaoDireta.add(itemCadastrarAcaoContribuicao);
@@ -96,6 +115,9 @@ public class MainScreen extends JFrame {
         menuBar.add(menuAcaoContribuicaoDireta);
 
         JMenu menuRelatorios = new JMenu("Relatorios");
+        FlatSVGIcon iconRelatorio = new FlatSVGIcon("icons/relatorios.svg", 24, 24);
+        iconRelatorio.setColorFilter(null);
+        menuRelatorios.setIcon(iconRelatorio);
 
         JMenuItem itemRelatorioFinalAcao = new JMenuItem("Relatorio Final das Ações");
 
@@ -166,15 +188,37 @@ public class MainScreen extends JFrame {
 
     private void openCadastroAcaoDeProducaoView() {
         SwingUtilities.invokeLater(() -> {
-            CadastrarAcaoDeProducaoView screen = new CadastrarAcaoDeProducaoView(
-                    controllerCoordenador, controllerAcaoProducao
-            );
+            CadastrarAcaoDeProducaoView screen = null;
+            try {
+                screen = new CadastrarAcaoDeProducaoView(
+                        controllerCoordenador, controllerAcaoProducao
+                );
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
             screen.setVisible(true);
         });
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            try {
+
+                UIManager.setLookAndFeel(new FlatMacLightLaf());
+                UIManager.put("Button.arc", 20);
+                UIManager.put("Button.font", new Font("SansSerif", Font.BOLD, 12));
+                UIManager.put("Component.arc", 15);
+                UIManager.put("ProgressBar.arc", 15);
+                UIManager.put("TextComponent.arc", 15);
+
+
+                InputStream is = MainScreen.class.getResourceAsStream("/fonts/OpenSans-Light.ttf");
+                assert is != null;
+                Font openSansFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(13f);
+                UIManager.put("defaultFont", openSansFont);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             initializeContext();
             if (controllerEntidade.findFirst().isEmpty()){
                 CadastrarEntidade cadastrarEntidadeView = new CadastrarEntidade(controllerEntidade);
