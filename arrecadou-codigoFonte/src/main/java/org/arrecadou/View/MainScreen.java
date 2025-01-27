@@ -10,7 +10,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.Objects;
@@ -83,7 +82,7 @@ public class MainScreen extends JFrame {
         menuCoordenador.add(itemCadastrarCoordenador);
         menuBar.add(menuCoordenador);
 
-        JMenu menuAcaoEventoComida = new JMenu("Ação Produção Evento Beneficente");
+        JMenu menuAcaoEventoComida = new JMenu("Ação Evento Beneficente");
         FlatSVGIcon iconEvtBeneficente = new FlatSVGIcon("icons/evtbeneficente.svg", 24, 24);
         iconEvtBeneficente.setColorFilter(null);
         menuAcaoEventoComida.setIcon(iconEvtBeneficente);

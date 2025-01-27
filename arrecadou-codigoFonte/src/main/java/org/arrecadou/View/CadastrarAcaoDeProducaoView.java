@@ -56,13 +56,13 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
         dataInicioField = new JFormattedTextField(dateMask);
         dataFimField = new JFormattedTextField(dateMask);
 
-        descricaoField.setPreferredSize(new Dimension(460, 30));
-        dataFimField.setPreferredSize(new Dimension(460, 30));
+        descricaoField.setPreferredSize(new Dimension(300, 30));
+        dataFimField.setPreferredSize(new Dimension(300, 30));
         dataInicioField.setPreferredSize(new Dimension(200, 30));
         nomeAcaoField.setPreferredSize(new Dimension(200, 30));
-        objetivoField.setPreferredSize(new Dimension(727, 30));
+        objetivoField.setPreferredSize(new Dimension(700, 30));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(2, 2, 6, 2);
         double labelWeight = 0.2;
         double fieldWeight = 0.8;
@@ -90,7 +90,7 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
         gbc.gridy = 1;
         gbc.weightx = labelWeight;
         gbc.anchor = GridBagConstraints.WEST;
-        topPanel.add(new JLabel("Data Início:"), gbc);
+        topPanel.add(new JLabel("Data Inicial:"), gbc);
 
         gbc.gridx = 1;
         gbc.weightx = fieldWeight;
@@ -98,7 +98,7 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
 
         gbc.gridx = 2;
         gbc.weightx = labelWeight;
-        topPanel.add(new JLabel("Data Fim:"), gbc);
+        topPanel.add(new JLabel("Data Final:"), gbc);
 
         gbc.gridx = 3;
         gbc.weightx = fieldWeight;
@@ -109,10 +109,10 @@ public class CadastrarAcaoDeProducaoView extends JFrame {
         gbc.gridy = 2;
         gbc.weightx = labelWeight;
         gbc.anchor = GridBagConstraints.WEST;
-        topPanel.add(new JLabel("Objetivo da Ação:"), gbc);
+        topPanel.add(new JLabel("Objetivo: "), gbc);
 
         gbc.gridx = 1;
-        gbc.gridwidth = 3; // 🔹 Ocupa o espaço restante
+        gbc.gridwidth = 3;
         gbc.weightx = fieldWeight;
         topPanel.add(objetivoField, gbc);
 
